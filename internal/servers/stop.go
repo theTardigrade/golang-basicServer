@@ -12,16 +12,14 @@ func stop(datumIndex int, restart bool) error {
 
 	datum.restartPending <- restart
 
-	// timeoutDuration, err := environment.Data.GetDuration("server_shutdown_timeout_duration")
-	// if err != nil {
-	// 	if environment.IsKeyNotFoundErr(err) {
-	// 		timeoutDuration = time.Minute
-	// 	} else {
-	// 		panic(err)
-	// 	}
-	// }
+	var ctx context.Context
+	var cancel context.CancelFunc
 
-	ctx, cancel := context.WithTimeout(context.Background(), timeoutDuration)
+	if o.ShutdownTimeoutDuration == 0 {
+		ctx, cancel = context.WithCancel(context.Background())
+	} else {
+		ctx, cancel = context.WithTimeout(context.Background(), timeoutDuration)
+	}
 	defer cancel()
 
 	datum.server.Shutdown(ctx)

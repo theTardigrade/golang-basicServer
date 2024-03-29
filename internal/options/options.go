@@ -10,6 +10,7 @@ type Datum struct {
 	HttpsPort               int
 	ResponseTimeoutDuration time.Duration
 	RequestTimeoutDuration  time.Duration
+	ShutdownTimeoutDuration time.Duration
 	CertFilePath            string
 	KeyFilePath             string
 	Routes                  DatumRoutes

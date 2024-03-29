@@ -7,10 +7,36 @@ import (
 )
 
 func Serve(opts Options) (err error) {
-	options.Init(&opts)
-	router.Init(&opts)
-	servers.Init(&opts)
+	serveInit(&opts)
 
+	err = serve(&opts)
+
+	return
+}
+
+func ServeContinuously(opts Options, errHandler func(error)) {
+	serveInit(&opts)
+
+	if errHandler == nil {
+		for {
+			serve(&opts)
+		}
+	} else {
+		for {
+			if err := serve(&opts); err != nil {
+				errHandler(err)
+			}
+		}
+	}
+}
+
+func serveInit(opts *Options) {
+	options.Init(opts)
+	router.Init(opts)
+	servers.Init(opts)
+}
+
+func serve(opts *Options) (err error) {
 	if err = servers.WaitForOpenPorts(); err != nil {
 		return
 	}

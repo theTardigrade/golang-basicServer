@@ -12,6 +12,7 @@ type (
 )
 
 func Serve(opts Options) (err error) {
+	options.Init(&opts)
 	router.Init(&opts)
 	servers.Init(&opts)
 

@@ -18,7 +18,7 @@ func stop(datumIndex int, restart bool) error {
 	if o.ShutdownTimeoutDuration == 0 {
 		ctx, cancel = context.WithCancel(context.Background())
 	} else {
-		ctx, cancel = context.WithTimeout(context.Background(), timeoutDuration)
+		ctx, cancel = context.WithTimeout(context.Background(), waitForOpenPortsTimeoutDuration)
 	}
 	defer cancel()
 

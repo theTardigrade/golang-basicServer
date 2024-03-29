@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	timeoutDuration = time.Second * 8
-	sleepDuration   = time.Millisecond * 100
+	waitForOpenPortsTimeoutDuration = time.Second * 8
+	waitForOpenPortsSleepDuration   = time.Millisecond * 100
 )
 
 var (
@@ -19,7 +19,7 @@ var (
 func WaitForOpenPorts() error {
 	startTime := time.Now()
 
-	for ; ; time.Sleep(sleepDuration) {
+	for ; ; time.Sleep(waitForOpenPortsSleepDuration) {
 		portsAvailable := true
 
 		for _, datum := range data {
@@ -46,7 +46,7 @@ func WaitForOpenPorts() error {
 			return nil
 		}
 
-		if time.Since(startTime) >= timeoutDuration {
+		if time.Since(startTime) >= waitForOpenPortsTimeoutDuration {
 			return ErrTimeout
 		}
 	}

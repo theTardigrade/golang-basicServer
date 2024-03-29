@@ -6,11 +6,6 @@ import (
 	"github.com/theTardigrade/golang-basicServer/internal/servers"
 )
 
-type (
-	Options       = options.Datum
-	OptionsRoutes = options.DatumRoutes
-)
-
 func Serve(opts Options) (err error) {
 	options.Init(&opts)
 	router.Init(&opts)

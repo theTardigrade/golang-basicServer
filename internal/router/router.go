@@ -13,8 +13,28 @@ var (
 )
 
 func Init(opts *options.Datum) {
+	for path, handler := range opts.Routes.Head {
+		multiplexer.Head(path, handler)
+	}
+
+	for path, handler := range opts.Routes.Delete {
+		multiplexer.Delete(path, handler)
+	}
+
 	for path, handler := range opts.Routes.Get {
 		multiplexer.Get(path, handler)
+	}
+
+	for path, handler := range opts.Routes.Patch {
+		multiplexer.Patch(path, handler)
+	}
+
+	for path, handler := range opts.Routes.Put {
+		multiplexer.Put(path, handler)
+	}
+
+	for path, handler := range opts.Routes.Post {
+		multiplexer.Post(path, handler)
 	}
 }
 

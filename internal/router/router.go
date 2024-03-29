@@ -8,38 +8,38 @@ import (
 )
 
 var (
-	multiplexer = bone.New()
-	Handler     = http.HandlerFunc(multiplexer.ServeHTTP)
+	Multiplexer = bone.New()
+	Handler     = http.HandlerFunc(Multiplexer.ServeHTTP)
 )
 
 func Init(opts *options.Datum) {
 	for path, handler := range opts.Routes.Head {
-		multiplexer.Head(path, handler)
+		Multiplexer.Head(path, handler)
 	}
 
 	for path, handler := range opts.Routes.Delete {
-		multiplexer.Delete(path, handler)
+		Multiplexer.Delete(path, handler)
 	}
 
 	for path, handler := range opts.Routes.Get {
-		multiplexer.Get(path, handler)
+		Multiplexer.Get(path, handler)
 	}
 
 	for path, handler := range opts.Routes.Patch {
-		multiplexer.Patch(path, handler)
+		Multiplexer.Patch(path, handler)
 	}
 
 	for path, handler := range opts.Routes.Put {
-		multiplexer.Put(path, handler)
+		Multiplexer.Put(path, handler)
 	}
 
 	for path, handler := range opts.Routes.Post {
-		multiplexer.Post(path, handler)
+		Multiplexer.Post(path, handler)
 	}
 }
 
 func IsHandled(r *http.Request) bool {
-	for _, routes := range multiplexer.Routes {
+	for _, routes := range Multiplexer.Routes {
 		for _, route := range routes {
 			if route.Match(r) {
 				return true

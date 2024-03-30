@@ -13,6 +13,10 @@ var (
 )
 
 func Init(opts *options.Datum) {
+	if opts.Routes.NotFound != nil {
+		Multiplexer.NotFound(opts.Routes.NotFound)
+	}
+
 	for path, handler := range opts.Routes.Head {
 		Multiplexer.Head(path, handler)
 	}

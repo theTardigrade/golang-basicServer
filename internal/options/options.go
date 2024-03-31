@@ -14,6 +14,7 @@ type Datum struct {
 	CertFilePath            string
 	KeyFilePath             string
 	Routes                  DatumRoutes
+	Middleware              DatumMiddleware
 }
 
 type DatumRoutes struct {
@@ -25,6 +26,13 @@ type DatumRoutes struct {
 	Put      map[string]http.Handler
 	Post     map[string]http.Handler
 }
+
+type DatumMiddleware struct {
+	Before []DatumMiddlewareHandler
+	After  []DatumMiddlewareHandler
+}
+
+type DatumMiddlewareHandler func(http.Handler) http.Handler
 
 const (
 	datumHttpPortDefault                = 80

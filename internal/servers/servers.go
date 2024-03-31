@@ -6,8 +6,8 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/theTardigrade/golang-basicServer/internal/middleware"
 	"github.com/theTardigrade/golang-basicServer/internal/options"
-	"github.com/theTardigrade/golang-basicServer/internal/router"
 )
 
 const (
@@ -60,7 +60,7 @@ func Init(opts *options.Datum) {
 	}
 
 	httpsDatum.server = &http.Server{
-		Handler:           router.Handler,
+		Handler:           middleware.Handler(opts),
 		ReadHeaderTimeout: opts.RequestTimeoutDuration,
 		WriteTimeout:      opts.ResponseTimeoutDuration,
 	}
